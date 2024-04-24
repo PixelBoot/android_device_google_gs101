@@ -154,7 +154,7 @@ do
   echo "$f: `cat $f`"
 done
 
-if [ $build_type = "userdebug" ]
+if [ $build_type = "eng" ]
 then
   echo "\n------ DC_registers dump ------"
   cat "/sys/class/power_supply/pca9468-mains/device/registers_dump"
@@ -226,7 +226,7 @@ fi
 
 echo "\n------ Charger Stats ------"
 cat "/sys/class/power_supply/battery/charge_details"
-if [ $build_type = "userdebug" ]
+if [ $build_type = "eng" ]
 then
   echo "\n------ Google Charger ------"
   cd /sys/kernel/debug/google_charger/
@@ -253,7 +253,7 @@ cat "/sys/class/power_supply/wireless/device/fw_rev"
 echo "\n------ RTX ------"
 cat "/dev/logbuffer_rtx"
 
-if [ $build_type = "userdebug" ]
+if [ $build_type = "eng" ]
 then
   echo "\n------ gvotables ------"
   cat /sys/kernel/debug/gvotables/*/status
