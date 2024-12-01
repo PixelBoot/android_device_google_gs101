@@ -27,9 +27,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
     device/google/gs101/linker.config.json
 
-# Parts
-PRODUCT_PACKAGES += \
-    GoogleParts
-
 # Touch
 include hardware/google/pixel/touch/device.mk
