@@ -38,11 +38,8 @@
 #include "Usb.h"
 
 #include <aidl/android/frameworks/stats/IStats.h>
-#include <android_hardware_usb_flags.h>
 #include <pixelusb/UsbGadgetCommon.h>
 #include <pixelstats/StatsHelper.h>
-
-namespace usb_flags = android::hardware::usb::flags;
 
 using aidl::android::frameworks::stats::IStats;
 using android::base::GetProperty;
@@ -66,7 +63,6 @@ constexpr char kComplianceWarningBC12[] = "bc12";
 constexpr char kComplianceWarningDebugAccessory[] = "debug-accessory";
 constexpr char kComplianceWarningMissingRp[] = "missing_rp";
 constexpr char kComplianceWarningOther[] = "other";
-constexpr char kComplianceWarningInputPowerLimited[] = "input_power_limited";
 constexpr char kMax77759TcpcDevName[] = "i2c-max77759tcpc";
 constexpr unsigned int kMax77759TcpcClientId = 0x25;
 constexpr char kContaminantDetectionPath[] = "contaminant_detection";
@@ -376,20 +372,9 @@ Status queryNonCompliantChargerStatus(std::vector<PortStatus> *currentPortStatus
                     continue;
                 }
                 if (!strncmp(reason.c_str(), kComplianceWarningOther,
-                             strlen(kComplianceWarningOther)) ||
-                    !strncmp(reason.c_str(), kComplianceWarningInputPowerLimited,
-                             strlen(kComplianceWarningInputPowerLimited))) {
-                    if (usb_flags::enable_usb_data_compliance_warning() &&
-                        usb_flags::enable_input_power_limited_warning()) {
-                        ALOGI("Report through INPUT_POWER_LIMITED warning");
-                        (*currentPortStatus)[i].complianceWarnings.push_back(
-                            ComplianceWarning::INPUT_POWER_LIMITED);
-                        continue;
-                    } else {
-                        (*currentPortStatus)[i].complianceWarnings.push_back(
-                            ComplianceWarning::OTHER);
-                        continue;
-                    }
+                            strlen(kComplianceWarningOther))) {
+                    (*currentPortStatus)[i].complianceWarnings.push_back(ComplianceWarning::OTHER);
+                    continue;
                 }
             }
             if ((*currentPortStatus)[i].complianceWarnings.size() > 0 &&
