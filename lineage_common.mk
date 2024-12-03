@@ -25,6 +25,3 @@ include hardware/google/pixel/lineage_health/device.mk
 # Linker config
 PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
     device/google/gs101/linker.config.json
-
-# Touch
-include hardware/google/pixel/touch/device.mk
